@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="container mb-5 pb-5">
+    <h1 class="display-3 text-center my-3">Quiz Result </h1>
+    {% if quiz %}
+    <h3 class="text-center"> Quiz Title: {{quiz.title}} </h3>
+
+    <h3 class="text-center">Your Score: {{rightAns}}/{{result.count}}</h3>
+
+    {% endif %}
+
+
+    <h4 class="my-3">Result Details</h4>
+    <table class="table table-bordered">
+
+        <tr>
+            <th>Total Question</th>
+            <td>{{result.count}}</td>
+        </tr>
+        <tr>
+            <th>Total Skipped Question</th>
+            <td>{{skipped}}</td>
+        </tr>
+        <tr>
+            <th>Total Attemped Question</th>
+            <td>{{attemped}}</td>
+        </tr>
+        <tr>
+            <th>Right Answers</th>
+            <td>{{rightAns}}</td>
+        </tr>
+
+    </table>
+
+    <h4 class="my-3">Attemped Question</h4>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Right Answer</th>
+                <th>Submitted Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for r in result %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{r.question}}</td>
+                <td>{{r.question.right_opt}}</td>
+                {% if r.question.right_opt == r.right_ans %}
+                <td class="bg-success text-white">{{r.right_ans}}</td>
+                {% else %}
+                <td class="bg-danger text-white">{{r.right_ans}}</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</section>
+
+
+{% endblock %}

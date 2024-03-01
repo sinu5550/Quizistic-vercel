@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container mb-5 pb-3">
+    <h3 class="text-center my-5">Ratings for "{{quiz.title}}" Quiz</h3>
+    <div class="row">
+        <div class="col-12 col-md-6 order-2 order-md-1">
+            <div class="col">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h4>{{quiz.title}}</h4>
+                        <p class="card-text">Total Questions - {{quiz.question_set.count}}</p>
+                        <p class="card-text">{{quiz.description | truncatewords:8}}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a href="{% url 'question' quiz.id %}" type="button"
+                                    class="btn btn-sm btn-outline-danger">Start
+                                    Quiz</a>
+                            </div>
+                            <small class="text-body-secondary">{{quiz.created_at | timesince}} ago</small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="card my-2">
+                <h5 class="p-3">Total Ratings : {{comments | length}}</h5>
+
+                {% for comment in comments %}
+                <div class="card-body border m-2 lh-1 ">
+                    <p>
+                        {% if comment.user.account.profile_image and comment.user.account.profile_image.url %}
+                        <img src="{{ comment.user.account.profile_image.url }}" class="profile-pic me-1"
+                            alt="Profile Pic"
+                            style="border-radius: 50%; height: 30px; width: 30px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% else %}
+                        <img src="{% static 'images/default.png' %}" class="profile-pic me-1" alt="Profile Pic"
+                            style="border-radius: 50%; height: 30px; width: 30px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% endif %}
+
+                        <b> {{comment.user.username}}</b> <small>at {{comment.created_on}}</small>
+                    </p>
+                    <p>{{comment.choice}}</p>
+                    <p>"{{comment.body}}"</p>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        <div class="col-12 col-md-6 order-1 order-md-2 mb-2">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        <h1>Give Ratings & Review</h1>
+                        {% csrf_token %}
+                        {{comment_form | crispy}}
+                        {% if user.is_authenticated %}
+                        <button class="btn btn-danger rounded-0" type="submit">Submit</button>
+                        {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-primary  px-3 py-1 rounded-0">Login to
+                            Give
+                            Feedback</a>
+                        {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

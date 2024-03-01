@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h1 class="display-3 text-center my-3">Quizzes</h1>
+
+
+<div class="container">
+    <div class="d-flex flex-wrap gap-2 justify-content-center ">
+        <a href="{% url 'all_quiz' %}" class="btn btn-light">All Quiz</a>
+        {% for cat in categories %}
+        <a href="{% url 'cat_quiz' cat.slug %}" class="btn btn-light ">{{cat.name}}</a>
+        {% endfor %}
+
+    </div>
+</div>
+<div class="container my-5 pb-5">
+    {% if quizzes|length > 0 %}
+
+    <div class=" row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3 gy-3 ">
+
+        {% for quiz in quizzes %}
+        <div class="col">
+            <div class="card shadow-sm px-0 h-100">
+                <div class="card-body">
+                    <h4>{{quiz.title}}</h4>
+                    <p class="card-text">Total Questions - {{quiz.question_set.count}}</p>
+                    <p class="card-text">{{quiz.description | truncatewords:8}}</p>
+
+
+                </div>
+                <div class=" card-footer bg-transparent border-0 my-2">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a href="{% url 'question' quiz.id %}" type="button"
+                                class="btn btn-sm btn-outline-danger">Start
+                                Quiz</a>
+                        </div>
+                        <small class="text-body-secondary">{{quiz.created_at | timesince}} ago</small>
+                    </div>
+                    <div class="d-flex justify-content-center mt-3">
+                        <a href="{% url 'ratings' quiz.id %}"
+                            class="text-dark mx-auto btn bg-body-tertiary  shadow-sm rounded-pill py-0  text-decoration-none show-rating-btn">
+                            Show Ratings <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    {% else %}
+    <h3 class="text-danger fw-bolder text-center">There is no Quiz available for this Category.</h3>
+    {% endif %}
+
+</div>
+{% endblock %}

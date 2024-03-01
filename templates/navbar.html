@@ -1,0 +1,63 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg shadow-sm ">
+    <div class=" container ">
+        <a class="navbar-brand text-danger fw-bolder fs-2" href="{% url 'home' %}">Quizistic.</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse gap-2 " id="navbarNavAltMarkup">
+            <div class="navbar-nav  ps-lg-5 item-nav ">
+                <a class="btn  btn-outline-dark rounded-0 border-0  fw-medium" aria-current="page"
+                    href="{% url 'home' %}">Home</a>
+                {% if user.is_authenticated %}
+                <a class="btn  btn-outline-dark rounded-0 border-0  fw-medium" aria-current="page"
+                    href="{% url 'all_quiz' %}">Quiz</a>
+                <a class="btn  btn-outline-dark rounded-0 border-0  fw-medium" aria-current="page"
+                    href="{% url 'result' %}">Result</a>
+                {% endif %}
+
+            </div>
+            <div class="navbar-nav  item-nav gap-2 ms-lg-auto 2 align-items-center ">
+                {% if user.is_authenticated %}
+                <div class="fw-medium ">Welcome, {{ request.user.first_name }} {{ request.user.last_name }} </div>
+                <div class="btn-group dropstart" data-bs-hover="dropdown">
+                    <button type=" button" class="btn px-0 border-0 rounded-0" data-bs-toggle="dropdown">
+                        {% if user.account.profile_image and user.account.profile_image.url %}
+                        <img src="{{ user.account.profile_image.url }}" class="profile-pic" alt="Profile Pic"
+                            style="border-radius: 50%; height: 45px; width: 45px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% else %}
+                        <img src="{% static 'images/default.png' %}" class="profile-pic" alt="Default Profile Pic"
+                            style="border-radius: 50%; height: 45px; width: 45px; object-fit: cover; object-position: 50% 20%; border: 2px solid #1877f2;">
+                        {% endif %}
+                    </button>
+                    <ul class="dropdown-menu mt-5 ">
+                        <li><a href="{% url 'profile' %}" class="rounded-0 text-decoration-none"><button
+                                    class="dropdown-item " type="button">
+                                    <i class="bi bi-person-fill me-2"></i>Profile</button></a></li>
+                        <li><a href="{% url 'pass_change' %}" class="rounded-0 text-decoration-none"><button
+                                    class="dropdown-item " type="button">
+                                    <i class="bi bi-lock-fill me-2"></i></i>Change Password</button></a></li>
+
+                        <li>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+
+                                <button class="dropdown-item " type="submit"">
+                                    <i class=" bi bi-box-arrow-left me-2"></i>Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
+
+                {% else%}
+                <a href=" {% url 'register' %}" class="btn btn-outline-danger rounded-0">Sign Up</a>
+                <a href="{% url 'login' %}" class="btn btn-danger rounded-0">Login</a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+</nav>
