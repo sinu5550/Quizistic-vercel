@@ -28,8 +28,8 @@ SECRET_KEY = 'django-insecure-ygkgbcakx!63wgq*-n!*@b$uss9j^2t6!ae2r$knqu+wz1f!e$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
-CSRF_TRUSTED_ORIGINS = ['https://quizistic-sinu5550.onrender.com','https://*.127.0.0.1',]
+ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['quizistic.pythonanywhere.com','https://*.127.0.0.1',]
 
 # Application definition
 
