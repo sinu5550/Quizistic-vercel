@@ -16,6 +16,7 @@ PyAutoGUI
 PyGetWindow
 PyMsgBox
 pyperclip
+psycopg2-binary
 PyRect
 PyScreeze
 pytweening
