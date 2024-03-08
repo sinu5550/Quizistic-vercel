@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ygkgbcakx!63wgq*-n!*@b$uss9j^2t6!ae2r$knqu+wz1f!e$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".vercel.app",".now.sh"]
+ALLOWED_HOSTS = ['.vercel.app','now.sh','127.0.0.1','localhost']
 CSRF_TRUSTED_ORIGINS = ['https://quizistic-sinu5550.onrender.com','https://*.127.0.0.1',]
 
 # Application definition
@@ -84,13 +84,23 @@ WSGI_APPLICATION = 'Quizistic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'izDhmtiCEEglpIkWtqUmBvqgsZOzsNLi',
+        'HOST': 'monorail.proxy.rlwy.net',
+        'PORT': '46469',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -127,10 +137,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 import os
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build','static')
+
 
 LOGIN_URL = '/account/login/'
 # Base url to serve media files
@@ -144,7 +151,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = env("EMAIL")
-EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")
+EMAIL_HOST_USER = "siyangerman@gmail.com"
+EMAIL_HOST_PASSWORD = "wneemjexyquhgffi"
 
 # SESSION_COOKIE_AGE = 1800
+
+STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
